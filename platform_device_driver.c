@@ -30,7 +30,7 @@ struct platform_device platform_pcd_dev_1 = {
 };
 
 struct platform_device platform_pcd_dev_2 = {
-    .name = "psuedo-char-device",
+    .name = "pseudo-char-device",
     .id = 1,
     .dev = {
       .platform_data = &pcd_dev_data[1],
@@ -38,6 +38,10 @@ struct platform_device platform_pcd_dev_2 = {
     }
 };
 
+struct platform_device *platform_pcdevs[] =
+{
+  &platform_pcd_dev_1, &platform_pcd_dev_2
+};
 
 static int __init pcd_dev_platform_init(void)
 {
@@ -45,8 +49,10 @@ static int __init pcd_dev_platform_init(void)
     register the platform devices
     add platform devices to device hierarchy
   */
-  platform_device_register(&platform_pcd_dev_1);
-  platform_device_register(&platform_pcd_dev_2);
+  // platform_device_register(&platform_pcd_dev_1);
+  // platform_device_register(&platform_pcd_dev_2);
+
+  platform_add_devices(platform_pcdevs, ARRAY_SIZE(platform_pcdevs));
 
   pr_info("Platform device loaded...\n");
 
